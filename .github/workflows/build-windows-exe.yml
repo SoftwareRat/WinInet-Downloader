@@ -19,18 +19,8 @@ jobs:
     - name: Build app for release
       run: msbuild VS\Downloader.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release -property:PlatformToolset=v142
 
-    - name: Find and Print exe files
-      run: |
-        dir /s /b *.exe
-      shell: cmd
-
-    - name: Find and Upload exe files
-      run: |
-        copy /Y /B /S *.exe %GITHUB_WORKSPACE%\
-      shell: cmd
-
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: compiled-artifact
-        path: ${{ github.workspace }}\*.exe
+        path: VS\Release\Downloader.exe

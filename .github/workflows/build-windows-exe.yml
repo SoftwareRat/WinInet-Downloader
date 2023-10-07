@@ -17,7 +17,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
     
     - name: Build app for release
-      run: msbuild VS\Downloader.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+      run: msbuild VS\Downloader.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release -property:PlatformToolset=v142
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3

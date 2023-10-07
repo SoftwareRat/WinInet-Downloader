@@ -17,10 +17,10 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
     
     - name: Build app for release
-      run: msbuild VS\Downloader.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
+      run: msbuild VS\Downloader.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: compiled-artifact
-        path: downloader.exe
+        path: VS\bin\Release\downloader.exe

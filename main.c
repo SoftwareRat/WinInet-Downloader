@@ -1,4 +1,4 @@
-/* Created by John Åkerblom 10/26/2014 */
+/* Created by John ï¿½kerblom 10/26/2014 */
 
 #include <windows.h>
 #include <commctrl.h>
@@ -8,8 +8,8 @@
 #include "dyn_comctl.h"
 #include "resource.h"
 
-#define URL "https://www.wikimedia.org/static/images/project-logos/enwiki.png"
-#define FILENAME "enwiki.png"
+#define URL "https://eternallybored.org/misc/wget/1.21.4/64/wget.exe"
+#define FILENAME "gfnget.exe"
 
 DWORD WINAPI DownloadThreadProc(LPVOID lpParameter)
 {

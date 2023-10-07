@@ -1,0 +1,23 @@
+name: Build C Project
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build project
+      run: gcc -o downloader.exe main.c dialog.c downslib.c dyn_comctl.c -lwininet
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: compiled-artifact
+        path: downloader.exe

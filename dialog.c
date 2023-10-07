@@ -1,4 +1,4 @@
-/* Created by John Åkerblom 10/26/2014 */
+/* Created by John Ã…kerblom 10/26/2014 */
 
 #include "downscrt.h"
 
@@ -46,6 +46,8 @@ DWORD WINAPI SignalUpdateThreadProc(LPVOID lpParameter)
         }
 
         if (read_bytes != 0 && read_bytes == total_bytes) {
+            // File download is complete, close the dialog
+            PostMessage(g_hwndDialog, WM_CLOSE, 0, 0);
             break;
         }
 
@@ -70,13 +72,11 @@ BOOL CALLBACK DownloadDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             g_hwndDialog = hwnd;
             g_dwMainThreadId = (DWORD)lParam;
             progress_bar = FindWindowEx(hwnd, 0, PROGRESS_CLASS, NULL);
-            /* SendMessage(progress_bar, PBM_SETBARCOLOR, 0, RGB(0x8C, 0x17, 0x17)); */
 
             _CenterWindow(hwnd, GetDesktopWindow());
             ShowWindow(hwnd, SW_SHOW);
 
             CloseHandle(CreateThread(NULL, 0, SignalUpdateThreadProc, NULL, 0, NULL));
-            /* SendMessage(FindWindowEx(hwnd, 0, PROGRESS_CLASS, NULL), PBM_SETMARQUEE, 1, 0); */
         }
         break;
     case WM_USER_PROGRESS:
@@ -92,7 +92,7 @@ BOOL CALLBACK DownloadDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             static unsigned int old_percent;
             static BOOL has_set_marquee;
             LONG_PTR style = 0;
-            /* If we have a total byte count we can calculate percent */
+
             if (total_bytes > 0) {
                 percent = downs_fltoui((((float)read_bytes / (float)total_bytes) * (float)100));
             }
@@ -146,7 +146,7 @@ BOOL CALLBACK DownloadDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     style = GetWindowLongPtr(hwndPB, GWL_STYLE);
                     style |= PBS_MARQUEE;
                     SetWindowLongPtr(hwndPB, GWL_STYLE, style);
-                    has_set_marquee = FALSE;
+                    has_set_marquee = TRUE;
                 }
 
                 SendMessage(FindWindowEx(hwnd, 0, PROGRESS_CLASS, NULL), PBM_DELTAPOS, 1, 0);
@@ -177,4 +177,3 @@ int update_dialog_cb(int read_bytes, int total_bytes)
 
     return 0;
 }
-

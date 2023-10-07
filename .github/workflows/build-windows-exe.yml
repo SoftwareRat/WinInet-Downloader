@@ -13,8 +13,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Build project
-      run: msbuild /p:Configuration=Release
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+    
+    - name: Build app for release
+      run: msbuild VS\Downloader.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
